@@ -1,0 +1,61 @@
+#!/usr/bin/ruby -ws
+
+$n ||= false
+
+require "json"
+
+class Float
+  def floor_ n=0
+    m = 10**n
+    (self*m).floor.to_f / m
+  end
+end
+
+def issues name, pct
+  pcts = [pct] + pct.floor_(1).step(1.0, 0.1).drop(1).to_a
+  prev = nil
+
+  pcts.each_cons 2 do |from, to|
+    msg = "Increase coverage of %s from %6.2f%% to %6.2f%%" %
+      [name, from*100.0, to*100.0]
+
+    if prev then
+      msg << "\n\nSee #{prev}"
+    end
+
+    cmd = "hub issue create -m \"#{msg}\""
+
+    if $n then
+      puts cmd
+    else
+      prev = `#{cmd}`
+    end
+  end
+end
+
+file_re = ARGV.empty? ? /./ : Regexp.union(*ARGV)
+
+Dir["all_coverage/*.rb/.resultset.json"].each do |path|
+  data     = JSON.load File.read path
+  re       = /#{File.basename(File.dirname(path), "_test.rb").tr "_", "."}/
+
+  cov_data = data["Unit Tests"]["coverage"]
+  keys     = cov_data.keys.grep re
+
+  unless keys.empty? then
+    keys.each do |key| # TODO: this is confusing. Just grab first
+      file = cov_data[key]
+      name = key[/(app|lib)\/.*/] || key
+      max  = file.compact.size
+      n    = max - file.count(0)
+
+      next unless name =~ file_re
+
+      issues name, n.to_f/max
+    end
+  else
+    next unless path =~ file_re
+    name = File.basename(File.dirname(path))
+    issues name, 0.0
+  end
+end

@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+$: << "lib"
+$: << "test"
+$: << "."
+
+require "coverage/start"
+require "minitest/autorun"
+
+ARGV.each do |path_or_glob|
+  Dir[path_or_glob].each do |path|
+    next unless File.file? path
+    load path
+  end
+end

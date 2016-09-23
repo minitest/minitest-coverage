@@ -1,0 +1,14 @@
+.autotest
+History.rdoc
+Manifest.txt
+README.rdoc
+Rakefile
+bin/minitest_coverage
+bin/minitest_coverage_issues
+example/lib/example.rb
+example/test/test_example.rb
+lib/coverage/pruner.rb
+lib/coverage/start.rb
+lib/minitest/coverage.rb
+lib/minitest/coverage_plugin.rb
+test/minitest/test_coverage.rb
