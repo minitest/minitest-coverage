@@ -5,11 +5,29 @@ rdoc :: http://docs.seattlerb.org/minitest-coverage
 
 == DESCRIPTION:
 
-Ruby's contemporary test coverage tools all lie. 
+Ruby's contemporary test coverage tools all lie, exaggerating coverage
+through false-positives and creating a false sense of security;
+minitest-coverage tries to address this.
+
+Coverage Analysis Tools rely on tracing facilities built into ruby’s
+VM. You run your tests, and collect data. Seems simple, but that’s a
+very flawed approach that buffers your coverage numbers up falsely.
+I’ve witnessed false coverage by as much as 60%, but it could be even
+worse. Worse, the tracing facilities currently make it impossible to
+get truly accurate numbers. Even so, they can be improved to be much
+more accurate.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* Honest test coverage analysis, prone to false negative, not false positive.
+* Allows you to record a baseline of your implementation and cache it.
+* Allows you to run a subset of your tests with the baseline.
+* Allows you to run subsets of your tests and merge them on report.
+* Doesn't require fully mocked tests for accurate coverage analysis.
+* Filters results down to the class-under-test to remove false positives.
+* FIX: Fails to map some tests back to implementation because of naming mismatches.
+* TODO: doesn't yet integrate with simplecov's html report system.
+* TODO: beta beta beta
 
 == SYNOPSIS:
 
@@ -51,11 +69,12 @@ Ruby's contemporary test coverage tools all lie.
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* Ruby, patched currently. :(
+* minitest + tests in minitest
 
 == INSTALL:
 
-* sudo gem install minitest-coverage
+* [sudo] gem install minitest-coverage
 
 == LICENSE:
 
