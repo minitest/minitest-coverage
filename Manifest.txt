@@ -8,6 +8,7 @@ bin/minitest_coverage
 bin/minitest_coverage_issues
 example/lib/example.rb
 example/test/test_example.rb
+lib/coverage/dumper.rb
 lib/coverage/pruner.rb
 lib/coverage/start.rb
 lib/minitest/coverage.rb
