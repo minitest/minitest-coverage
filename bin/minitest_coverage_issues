@@ -35,7 +35,7 @@ end
 
 file_re = ARGV.empty? ? /./ : Regexp.union(*ARGV)
 
-Dir["all_coverage/*.rb/.resultset.json"].each do |path|
+Dir["coverage.json"].each do |path| # cheat
   data     = JSON.load File.read path
   re       = /#{File.basename(File.dirname(path), "_test.rb").tr "_", "."}/
 
