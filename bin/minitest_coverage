@@ -7,9 +7,17 @@ $: << "."
 require "coverage/start"
 require "minitest/autorun"
 
+new_argv = []
+
 ARGV.each do |path_or_glob|
-  Dir[path_or_glob].each do |path|
-    next unless File.file? path
-    load path
+  if path_or_glob =~ /^[\d-]/ then
+    new_argv << path_or_glob
+  else
+    Dir[path_or_glob].each do |path|
+      next unless File.file? path
+      load path
+    end
   end
 end
+
+ARGV.replace new_argv
