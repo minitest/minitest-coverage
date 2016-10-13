@@ -16,8 +16,23 @@ module Minitest
       @@coverage_baseline
     end
 
+    def self.coverage_data
+      @@coverage_data
+    end
+
+    def self.coverage_data= o
+      @@coverage_data = o
+    end
+
+    def coverage_data
+      @@coverage_data
+    end
+
     # Marshal to unfreeze (frozen state depends on ruby version?)
     self.coverage_baseline = Marshal.load Marshal.dump Coverage.peek_result
+
+    # full dupe of baseline
+    self.coverage_data     = Marshal.load Marshal.dump coverage_baseline
 
     def clean_path path
       path[Dir.pwd.length+1..-1]
@@ -74,7 +89,7 @@ module Minitest
       path, lines = find_path_and_lines new_coverage, self.name
 
       if path and lines then
-        coverage_baseline[path] = lines
+        coverage_data[path] = lines
       else
         # warn "Bad mapping for #{self.name}. Skipping coverage." # TODO
       end
@@ -83,11 +98,10 @@ module Minitest
     def output_coverage
       require "json"
 
-      cleaned = coverage_baseline.reject { |path, lines|
+      cleaned = coverage_data.reject { |path, lines|
         path.nil? or
           path.include? RbConfig::CONFIG["libdir"] or
           not path.start_with? PWD
-
       }
 
       File.open "coverage.json", "w" do |f|
@@ -119,7 +133,7 @@ module Minitest
 
       new_coverage = Coverage.peek_result
 
-      coverage_diff(self.name, new_coverage, coverage_baseline)
+      coverage_diff(self.name, new_coverage, coverage_data)
       merge_coverage new_coverage
 
       if Coverage.respond_to? :result= then

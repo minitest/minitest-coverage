@@ -64,8 +64,6 @@ class TestMinitest::TestCoverage < Minitest::Test
     cover "example/test/test_example.rb", "example/test/test_indirect.rb"
 
     assert_coverage "example/lib/indirect.rb", [1, N, 1, 1, 1, N, N]
-    assert_coverage "example/lib/example.rb",  [1, 1, 1, N, N, 1, 2, N, N] #HACK
-    # TODO: should be [1, 1, 0, N, N, 1, 1, N, N]
-    # TODO: need to store baseline separate from coverage data
+    assert_coverage "example/lib/example.rb",  [1, 1, 0, N, N, 1, 1, N, N]
   end
 end
