@@ -12,7 +12,12 @@ module Minitest
       @@coverage_baseline = o
     end
 
-    self.coverage_baseline = Coverage.peek_result
+    def coverage_baseline
+      @@coverage_baseline
+    end
+
+    # Marshal to unfreeze (frozen state depends on ruby version?)
+    self.coverage_baseline = Marshal.load Marshal.dump Coverage.peek_result
 
     def clean_path path
       path[Dir.pwd.length+1..-1]
@@ -49,7 +54,8 @@ module Minitest
     end
 
     def impl_name test_name
-      (test_name[/^([\w:]+?)Test/, 1] || test_name[/^Test([\w:]+)$/, 1]).
+      (test_name[/^([\w:]+?)Test/, 1] ||
+       test_name[/^Test([\w:]+)$/, 1]).
         gsub(/([a-z])([A-Z])/, '\1_\2').
         gsub(/::/, "/").
         downcase + "\\.rb"
@@ -67,15 +73,8 @@ module Minitest
     def merge_coverage new_coverage
       path, lines = find_path_and_lines new_coverage, self.name
 
-      # unless path then
-      #   p self.name
-      #   p path
-      #   require "pry"
-      #   binding.pry
-      # end
-
       if path and lines then
-        @@coverage_baseline[path] = lines
+        coverage_baseline[path] = lines
       else
         # warn "Bad mapping for #{self.name}. Skipping coverage." # TODO
       end
@@ -84,7 +83,7 @@ module Minitest
     def output_coverage
       require "json"
 
-      cleaned = @@coverage_baseline.reject { |path, lines|
+      cleaned = coverage_baseline.reject { |path, lines|
         path.nil? or
           path.include? RbConfig::CONFIG["libdir"] or
           not path.start_with? PWD
@@ -120,14 +119,17 @@ module Minitest
 
       new_coverage = Coverage.peek_result
 
-      coverage_diff(self.name, new_coverage, @@coverage_baseline)
+      coverage_diff(self.name, new_coverage, coverage_baseline)
       merge_coverage new_coverage
 
       if Coverage.respond_to? :result= then
-        Coverage.result = @@coverage_baseline
+        Coverage.result = coverage_baseline
       else
-        warn "Unable to reset coverage baseline. Numbers will be artificially high." unless @@coverage_warning
-        @@coverage_warning = true
+        @@coverage_warning ||= false
+        unless @@coverage_warning then
+          warn "Unable to reset coverage baseline. Numbers will be artificially high."
+          @@coverage_warning = true
+        end
       end
     end
   end
