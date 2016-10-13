@@ -7,7 +7,9 @@ add_coverage_result_set.patch
 bin/minitest_coverage
 bin/minitest_coverage_issues
 example/lib/example.rb
+example/lib/indirect.rb
 example/test/test_example.rb
+example/test/test_indirect.rb
 lib/coverage/dumper.rb
 lib/coverage/pruner.rb
 lib/coverage/start.rb

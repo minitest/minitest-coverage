@@ -7,9 +7,3 @@ class Example
     42
   end
 end
-
-class IncidentalCoverage
-  def x
-    Example.new.x
-  end
-end
