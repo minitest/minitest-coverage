@@ -28,7 +28,6 @@ more accurate.
 * FIX: Fails to map some tests back to implementation because of naming mismatches.
 * TODO: doesn't yet integrate with simplecov's html report system.
 * TODO: beta beta beta
-* TODO: get instructions for building with custom patch in rbenv/rvm
 * TODO: make fallback code more accurate with manual baseline accounting?
 
 == SYNOPSIS:
@@ -77,6 +76,21 @@ more accurate.
 == INSTALL:
 
 * [sudo] gem install minitest-coverage
+
+=== Custom Ruby
+
+This currently requires a patch against ruby to work well. The easiest
+way to handle this is probably with rbenv+ruby-build or rvm.
+
+The patch SHOULD apply cleanly against 2.3.x, 2.4, and trunk/master.
+
+=== For rbenv+ruby-build:
+
+    curl -L http://github.com/ruby/ruby/pull/1456.patch | rbenv install -p 2.4.0-preview1
+
+=== For rvm:
+
+    rvm install 2.4.0-preview1 --patch http://github.com/ruby/ruby/pull/1456.patch
 
 == LICENSE:
 
