@@ -28,6 +28,8 @@ more accurate.
 * FIX: Fails to map some tests back to implementation because of naming mismatches.
 * TODO: doesn't yet integrate with simplecov's html report system.
 * TODO: beta beta beta
+* TODO: get instructions for building with custom patch in rbenv/rvm
+* TODO: make fallback code more accurate with manual baseline accounting?
 
 == SYNOPSIS:
 
