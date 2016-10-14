@@ -75,7 +75,7 @@ more accurate.
 
 == INSTALL:
 
-* [sudo] gem install minitest-coverage
+* gem install minitest-coverage
 
 === Custom Ruby
 
