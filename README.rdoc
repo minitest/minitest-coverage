@@ -33,7 +33,7 @@ more accurate.
 == SYNOPSIS:
 
     # create baseline in production mode to force load all models & controllers
-    % RAILS_ENV=production time ruby -Ilib:. -rcoverage/start -rcoverage/pruner config/environment.rb 
+    % minitest_coverage_baseline
     % mv coverage.json baseline.json
 
     # run tests in full or in part:

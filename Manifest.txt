@@ -5,7 +5,9 @@ README.rdoc
 Rakefile
 add_coverage_result_set.patch
 bin/minitest_coverage
+bin/minitest_coverage_baseline
 bin/minitest_coverage_issues
+bin/minitest_coverage_report
 example/lib/example.rb
 example/lib/indirect.rb
 example/test/test_example.rb

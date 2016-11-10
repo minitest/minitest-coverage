@@ -1,0 +1,40 @@
+#!/usr/bin/ruby -w
+
+require "json"
+
+cover_lines = 0
+total_lines = 0
+
+data = {}
+
+ARGV.each do |input_path|
+  warn input_path
+  File.open input_path do |file|
+    data.merge! JSON.load file
+  end
+end
+
+puts "uncv  covr% totl : path"
+puts
+puts data.map { |path, lines|
+  name = path[/(app|lib|config)\/.*/]
+  next unless name
+  abort "Bad path: #{path.inspect}" unless name
+  next if path =~ /^config/
+
+  max  = lines.compact.size
+  n    = max - lines.count(0)
+
+  cover_lines += n
+  total_lines += max
+
+  if max > 0 then
+    pct = n.to_f/max
+    uncovered = max-max*pct
+    "%4d %5.1f%% %4d : %s" % [uncovered, 100.0*pct, max, name]
+  else
+    "%4d %5.1f%% %4d : %s" % [0, 100, max, name]
+  end
+}.compact.sort.reverse
+
+ puts "Actual Coverage = %d / %d = %.2f%%" % [cover_lines, total_lines, 100.0*cover_lines/total_lines]

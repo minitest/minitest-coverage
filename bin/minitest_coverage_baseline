@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+$: << "lib"
+$: << "."
+
+require "coverage/start"
+
+path = "./config/environment.rb"
+
+if File.file? path then
+  ENV["RAILS_ENV"] = "production"
+  require path
+end
+
+# TODO: app/** shouldn't be necessary given RAILS_ENV + environment.rb above.
+Dir["app/**/*.rb", "lib/**/*.rb"].each do |path|
+  begin
+    warn path
+    require path
+  rescue StandardError, SyntaxError => e     # for badly named ERB files
+    warn "Skipping #{e.inspect}"
+  end
+end
+
+require "coverage/pruner"
