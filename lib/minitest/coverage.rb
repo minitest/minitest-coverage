@@ -69,8 +69,14 @@ module Minitest
     end
 
     def impl_name test_name
-      (test_name[/^([\w:]+?)Test/, 1] ||
-       test_name[/^Test([\w:]+)$/, 1]).
+      unless test_name then
+        p :nil => [test_name, self.name]
+        p caller
+        abort
+      end
+      (test_name[/^([\w:]+?)Test/, 1] || # rails style
+       test_name[/^Test([\w:]+)$/, 1] || # ruby style
+       test_name).                       # give up
         gsub(/([a-z])([A-Z])/, '\1_\2').
         gsub(/::/, "/").
         downcase + "\\.rb"
