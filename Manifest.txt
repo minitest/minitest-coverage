@@ -17,4 +17,5 @@ lib/coverage/pruner.rb
 lib/coverage/start.rb
 lib/minitest/coverage.rb
 lib/minitest/coverage_plugin.rb
+minitest-coverage.el
 test/minitest/test_coverage.rb
