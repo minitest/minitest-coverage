@@ -61,3 +61,6 @@
 
 ;; (with-current-buffer (window-buffer (next-window)) (mtc-update))
 ;; (with-current-buffer (window-buffer (next-window)) (mtc-clear))
+
+;; (global-set-key (kbd "C-c u")   'mtc-update)
+;; (global-set-key (kbd "C-c U")   'mtc-clear)
