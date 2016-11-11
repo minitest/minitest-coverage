@@ -12,6 +12,16 @@ if File.file? path then
   require path
 end
 
+$mtc_location = Hash.new { |h,k| h[k] = [] }
+
+class Object
+  def self.inherited x
+    where = caller.first.split(/:/, 2).first
+    return unless where.include? Dir.pwd
+    $mtc_location[x] << where
+  end
+end
+
 # TODO: app/** shouldn't be necessary given RAILS_ENV + environment.rb above.
 Dir["app/**/*.rb", "lib/**/*.rb"].each do |path|
   begin
@@ -20,6 +30,10 @@ Dir["app/**/*.rb", "lib/**/*.rb"].each do |path|
   rescue StandardError, SyntaxError => e     # for badly named ERB files
     warn "Skipping #{e.inspect}"
   end
+end
+
+$mtc_location.each do |k,v|
+  $mtc_location[k] = v.uniq.sort.first
 end
 
 require "coverage/pruner"
