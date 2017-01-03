@@ -14,6 +14,15 @@ ARGV.each do |input_path|
   end
 end
 
+begin
+  require "simplecov"
+  SimpleCov.command_name "Minitest"
+  SimpleCov.add_filter "/test/"
+  SimpleCov::Formatter::HTMLFormatter.new.format SimpleCov::Result.new data
+rescue LoadError
+  warn "NOTE: simplecov not found. Unable to generate HTML report."
+end
+
 puts "uncv  covr% totl : path"
 puts
 puts data.map { |path, lines|
