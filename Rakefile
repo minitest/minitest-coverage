@@ -13,6 +13,9 @@ Hoe.spec "minitest-coverage" do
   self.need_rdoc = false
 
   license "MIT"
+
+  multiruby_skip << "2.0" << "2.1" << "2.2"
+  require_ruby_version "~> 2.3"
 end
 
 # vim: syntax=ruby
