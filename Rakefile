@@ -10,8 +10,6 @@ Hoe.plugin :rdoc
 Hoe.spec "minitest-coverage" do
   developer "Ryan Davis", "ryand-ruby@zenspider.com"
 
-  self.need_rdoc = false
-
   license "MIT"
 
   multiruby_skip << "2.0" << "2.1" << "2.2"
