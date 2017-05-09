@@ -1,3 +1,16 @@
+=== 1.0.0.b2 / 2017-05-09
+
+* 3 minor enhancements:
+
+  * Added location discovery to baseline generation. Helps with mapping test to impl.
+  * Produce SimpleCov HTML report if simplecov is installed! (jamesdabbs)
+  * Stripped Dir.pwd from class/module locations on creation.
+
+* 2 bug fixes:
+
+  * Added require_ruby_version to use 2.3+
+  * Turned rdoc generation back on. Gem hell resolved.
+
 === 1.0.0.b1 / 2016-09-12
 
 * 1 major enhancement
