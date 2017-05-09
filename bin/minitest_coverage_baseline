@@ -16,8 +16,10 @@ $mtc_location = Hash.new { |h,k| h[k] = [] }
 
 class Object
   def self.inherited x
+    pwd = Dir.pwd
     where = caller.first.split(/:/, 2).first
-    return unless where.include? Dir.pwd
+    return unless where.include? pwd
+    where = where[pwd.length+1..-1]
     $mtc_location[x] << where
   end
 end
