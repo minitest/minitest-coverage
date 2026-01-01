@@ -1,8 +1,5 @@
 require "coverage"
-Coverage.start
-
 require "minitest"
-require "pp"
 
 module Minitest
   @coverage = false
@@ -23,7 +20,7 @@ module Minitest
   def self.plugin_coverage_init options # :nodoc:
     if @coverage then
       require "coverage"
-      require "minitest/coverage"
+      require_relative "coverage"
       Minitest::Test.singleton_class.prepend Minitest::CoverageRunner
 
       if String === @coverage then

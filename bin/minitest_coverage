@@ -7,6 +7,8 @@ $: << "."
 require "coverage/start"
 require "minitest/autorun"
 
+Minitest.load :coverage if Minitest.respond_to? :load
+
 new_argv = []
 
 ARGV.each do |path_or_glob|

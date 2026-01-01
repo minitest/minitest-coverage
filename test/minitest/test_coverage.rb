@@ -28,7 +28,8 @@ class TestMinitest::TestCoverage < Minitest::Test
            "--coverage",
           ]
 
-    Process.wait spawn(*cmd, :out => "/dev/null", :err => "/dev/null")
+    nope = ENV["DEBUG"] ? "/dev/stdout" : "/dev/null"
+    Process.wait spawn(*cmd, out:nope, err:nope)
 
     assert_operator File, :file?, CPATH
     self.data = JSON.load File.read CPATH
@@ -64,6 +65,6 @@ class TestMinitest::TestCoverage < Minitest::Test
     cover "example/test/test_example.rb", "example/test/test_indirect.rb"
 
     assert_coverage "example/lib/indirect.rb", [1, N, 1, 1, 1, N, N]
-    assert_coverage "example/lib/example.rb",  [1, 1, 0, N, N, 1, 1, N, N]
+    assert_coverage "example/lib/example.rb",  [1, 1, 1, N, N, 1, 2, N, N]
   end
 end
