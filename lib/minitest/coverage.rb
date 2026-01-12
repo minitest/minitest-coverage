@@ -2,7 +2,7 @@ module Minitest; end
 
 module Minitest
   module CoverageRunner
-    VERSION = "1.0.0.b2"
+    VERSION = "1.0.0.b3"
 
     def self.coverage_baseline
       @@coverage_baseline

@@ -1,3 +1,11 @@
+=== 1.0.0.b3 / 2026-01-12
+
+* 3 bug fixes:
+
+  * Bumped ruby dependency to 3.2+
+  * Don't call Coverage.start in minitest/coverage_plugin.rb
+  * MT6: Load coverage plugin in bin/minitest_coverage.
+
 === 1.0.0.b2 / 2017-05-09
 
 * 3 minor enhancements:
@@ -16,4 +24,3 @@
 * 1 major enhancement
 
   * Birthday!
-
